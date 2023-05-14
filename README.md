@@ -1,8 +1,13 @@
-1. Create a Kubernetes In Docker(Kind) cluster, and start docker desktop
+## Create a Kubernetes In Docker(Kind) cluster, and start docker desktop
 kind create cluster --config kind-config.yaml - creates a cluster
 kubectl cluster-info --context kind-kind - verify the nodes
 
-2. Install nginx ingress in the controller
+## Install nginx ingress in the controller
+
+<details>
+<summary> Ingress </summary>
+
+```
 
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.7.1/deploy/static/provider/kind/deploy.yaml
 
@@ -12,10 +17,17 @@ helm repo update
 kubectl create namespace ingress-nginx
 helm install ingress-nginx ingress-nginx/ingress-nginx --namespace ingress-nginx
 
+```
+</details>
 
-3. Fixed a few port changes in the ingress yaml and service yaml to route the traffic to the backend pods
+Fixed a few port changes in the ingress yaml and service yaml to route the traffic to the backend pods
 
-4. Install the helm chart in the cluster and a namespace test
+## Install the helm chart in the cluster and a namespace test
+
+<details>
+<summary> Install the chart</summary>
+
+```
 helm install assignment-test . -n test    
 NAME: assignment-test
 LAST DEPLOYED: Sun May 14 16:28:12 2023
@@ -23,15 +35,33 @@ NAMESPACE: test
 STATUS: deployed
 REVISION: 1
 TEST SUITE: None
+```
 
-5. To test traffic to the ingress controller from my local machine, I used a sudo command here as in my system there were permission issues
+</details>
+
+## To test traffic to the ingress controller from my local machine
+
+I used a sudo command here as in my system there were permission issues
+
+<details>
+<summary> Port Forwarding</summary>
+
+```
+
 sudo kubectl port-forward svc/ingress-nginx-controller 80:80 -n ingress-nginx
 Password:
 Forwarding from 127.0.0.1:80 -> 80
 Forwarding from [::1]:80 -> 80
 Handling connection for 80
+```
+</details>
 
-6. Make a curl command to localhost:80/pfpt/test200  
+## Make a curl command to localhost:80/pfpt/test200  
+
+<details>
+<summary> Curl Command</summary>
+
+```
 curl  http://localhost:80/pfpt/test200  
 Hello World%    
 
@@ -53,8 +83,14 @@ Hello World%
 * Connection #0 to host localhost left intact
 Hello World* Closing connection 0         
 
-Logs:
+```
+</details>
 
+## Logs:
+<details>
+<summary> Pods</summary>
+
+```
 kubectl describe pod -n test           
 Name:         simple-dump-server-5684c8b8bf-tnjnk
 Namespace:    test
@@ -119,7 +155,14 @@ Events:
   Normal  Created    38s   kubelet            Created container simple-dump-server
   Normal  Started    38s   kubelet            Started container simple-dump-server
 
-_____________________________________________________________________________________
+```
+</details>
+
+<details>
+<summary>Services</summary>
+
+```
+
 kubectl describe svc -n test
 Name:              simple-dump-server
 Namespace:         test
@@ -142,7 +185,13 @@ TargetPort:        8080/TCP
 Endpoints:         10.244.1.5:8080
 Session Affinity:  None
 Events:            <none>
-_____________________________________________________________________________________
+```
+</details>
+
+<details>
+<summary>Ingress Resource</summary>
+
+```
 
 kubectl describe ingress -n test
 Name:             simple-dump-server
@@ -163,7 +212,13 @@ Events:
   ----    ------  ----  ----                      -------
   Normal  Sync    115s  nginx-ingress-controller  Scheduled for sync
 
-_____________________________________________________________________________________
+```
+</details>
+
+<details>
+<summary>Deployments </summary>
+
+```
 kubectl describe deployment -n test
 Name:                   simple-dump-server
 Namespace:              test
@@ -216,7 +271,14 @@ Events:
   ----    ------             ----   ----                   -------
   Normal  ScalingReplicaSet  2m19s  deployment-controller  Scaled up replica set simple-dump-server-5684c8b8bf to 1
 
-_____________________________________________________________________________________
+```
+
+</details>
+
+<details>
+<summary>Ingress Controller</summary>
+
+```
 kubectl get all -n ingress-nginx   
 NAME                                           READY   STATUS    RESTARTS      AGE
 pod/ingress-nginx-controller-697844d87-rpdwh   1/1     Running   3 (10m ago)   3d2h
@@ -232,7 +294,13 @@ deployment.apps/ingress-nginx-controller   1/1     1            1           3d2h
 NAME                                                 DESIRED   CURRENT   READY   AGE
 replicaset.apps/ingress-nginx-controller-697844d87   1         1         1       3d2h
                      
-_____________________________________________________________________________________
+```
+</details>
+
+<details>
+<summary>All Resource in Test</summary>
+
+```
  kubectl get all -n test         
 NAME                                      READY   STATUS    RESTARTS   AGE
 pod/simple-dump-server-5684c8b8bf-tnjnk   1/1     Running   0          4m26s
@@ -245,3 +313,7 @@ deployment.apps/simple-dump-server   1/1     1            1           4m26s
 
 NAME                                            DESIRED   CURRENT   READY   AGE
 replicaset.apps/simple-dump-server-5684c8b8bf   1         1         1       4m26s
+
+```
+</details>
+
