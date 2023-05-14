@@ -5,7 +5,7 @@ kubectl cluster-info --context kind-kind - verify the nodes
 ## Install nginx ingress in the controller
 
 <details>
-<summary> Ingress </summary>
+<summary> Ingress (Click to Expand) </summary>
 
 ```
 
@@ -25,7 +25,7 @@ Fixed a few port changes in the ingress yaml and service yaml to route the traff
 ## Install the helm chart in the cluster and a namespace test
 
 <details>
-<summary> Install the chart</summary>
+<summary> Install the chart (Click to Expand)</summary>
 
 ```
 helm install assignment-test . -n test    
@@ -44,7 +44,7 @@ TEST SUITE: None
 I used a sudo command here as in my system there were permission issues
 
 <details>
-<summary> Port Forwarding</summary>
+<summary> Port Forwarding (Click to Expand)</summary>
 
 ```
 
@@ -59,7 +59,7 @@ Handling connection for 80
 ## Make a curl command to localhost:80/pfpt/test200  
 
 <details>
-<summary> Curl Command</summary>
+<summary> Curl Command (Click to Expand)</summary>
 
 ```
 curl  http://localhost:80/pfpt/test200  
@@ -88,7 +88,7 @@ Hello World* Closing connection 0
 
 ## Logs:
 <details>
-<summary> Pods</summary>
+<summary> Pods (Click to Expand)</summary>
 
 ```
 kubectl describe pod -n test           
@@ -159,7 +159,7 @@ Events:
 </details>
 
 <details>
-<summary>Services</summary>
+<summary>Services (Click to Expand)</summary>
 
 ```
 
@@ -189,7 +189,7 @@ Events:            <none>
 </details>
 
 <details>
-<summary>Ingress Resource</summary>
+<summary>Ingress Resource (Click to Expand)</summary>
 
 ```
 
@@ -216,7 +216,7 @@ Events:
 </details>
 
 <details>
-<summary>Deployments </summary>
+<summary>Deployments (Click to Expand) </summary>
 
 ```
 kubectl describe deployment -n test
@@ -276,7 +276,7 @@ Events:
 </details>
 
 <details>
-<summary>Ingress Controller</summary>
+<summary>Ingress Controller (Click to Expand)</summary>
 
 ```
 kubectl get all -n ingress-nginx   
@@ -298,7 +298,7 @@ replicaset.apps/ingress-nginx-controller-697844d87   1         1         1      
 </details>
 
 <details>
-<summary>All Resource in Test</summary>
+<summary>All Resource in Test (Click to Expand)</summary>
 
 ```
  kubectl get all -n test         
