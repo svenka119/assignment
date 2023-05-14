@@ -1,0 +1,25 @@
+{{- if .Values.ingress.class }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: simple-dump-server
+  labels:
+    app: simple-dump-server
+    heritage: {{.Release.Service | quote}}
+    release: {{.Release.Name | quote}}
+    chart: {{ .Chart.Name }} 
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    ingress.kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - http:
+      paths:
+      - path: "/pfpt/test200"
+        pathType: Prefix
+        backend:
+          service:
+            name: simple-dump-server
+            port:
+              number: 8080
+{{- end }}
